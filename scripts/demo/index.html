@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1200px;
+    height: 630px;
+    background: #0a0a0a;
+    color: #fff;
+    font-family: 'SF Mono', 'JetBrains Mono', 'Menlo', 'Consolas', monospace;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Top bar ── */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    border-bottom: 1px solid #1f1f1f;
+    height: 52px;
+    flex-shrink: 0;
+  }
+  .topbar .logo {
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0.18em;
+    color: #ff5c1f;
+  }
+  .topbar .nav {
+    display: flex;
+    gap: 28px;
+    font-size: 11px;
+    color: #555;
+    letter-spacing: 0.08em;
+  }
+  .topbar .nav span.active { color: #ff5c1f; }
+
+  /* ── Main area ── */
+  .main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 48px;
+  }
+
+  /* ── Phase visibility ── */
+  .phase { display: none; width: 100%; height: 100%; }
+  .phase.active { display: flex; align-items: center; justify-content: center; }
+
+  /* ═══════════════════════════════════════════
+     PHASE 0 — Hero title
+     ═══════════════════════════════════════════ */
+  .hero-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .hero-logo {
+    font-size: 14px;
+    letter-spacing: 0.4em;
+    color: #ff5c1f;
+    font-weight: bold;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: all 0.5s ease-out;
+  }
+  .hero-logo.show { opacity: 1; transform: translateY(0); }
+  .hero-title {
+    font-size: 80px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease-out;
+  }
+  .hero-title.show { opacity: 1; transform: translateY(0); }
+  .hero-title .accent { color: #ff5c1f; }
+  .hero-tagline {
+    font-size: 13px;
+    color: #8a8a8a;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.5s ease-out 0.3s;
+  }
+  .hero-tagline.show { opacity: 1; }
+  .hero-cta {
+    margin-top: 12px;
+    padding: 10px 32px;
+    border: 1px solid #ff5c1f;
+    font-size: 12px;
+    color: #ff5c1f;
+    letter-spacing: 0.1em;
+    opacity: 0;
+    transition: opacity 0.4s ease-out 0.5s;
+  }
+  .hero-cta.show { opacity: 1; }
+
+  /* ═══════════════════════════════════════════
+     PHASE 1 — Scenario selection
+     ═══════════════════════════════════════════ */
+  .scenario-block {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 900px;
+  }
+  .scenario-title {
+    font-size: 11px;
+    color: #555;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .scenario-card {
+    background: #111;
+    border: 1px solid #1f1f1f;
+    padding: 20px;
+    transition: all 0.25s ease-out;
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  .scenario-card.show { opacity: 1; transform: translateY(0); }
+  .scenario-card.selected {
+    border-color: #ff5c1f;
+    background: #151510;
+    box-shadow: 0 0 20px rgba(255, 92, 31, 0.08);
+  }
+  .scenario-card .sc-name {
+    font-size: 13px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .scenario-card .sc-desc {
+    font-size: 10px;
+    color: #666;
+    line-height: 1.5;
+  }
+  .scenario-card .sc-tag {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 2px 8px;
+    font-size: 9px;
+    color: #ff5c1f;
+    border: 1px solid #ff5c1f33;
+    letter-spacing: 0.05em;
+  }
+
+  /* ═══════════════════════════════════════════
+     PHASE 2 — Live run console
+     ═══════════════════════════════════════════ */
+  .console-block {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    height: 100%;
+    align-items: stretch;
+  }
+  .pane {
+    flex: 1;
+    border: 1px solid #1f1f1f;
+    background: #0d0d0d;
+    display: flex;
+    flex-direction: column;
+  }
+  .pane-header {
+    padding: 8px 14px;
+    border-bottom: 1px solid #1f1f1f;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 0.12em;
+    color: #555;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .pane-header .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #ff5c1f;
+    animation: pulse 1s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+  .pane-body {
+    padding: 10px 14px;
+    font-size: 11px;
+    line-height: 1.9;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .line {
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: all 0.12s ease-out;
+    white-space: nowrap;
+  }
+  .line.show { opacity: 1; transform: translateX(0); }
+  .line .ts { color: #333; }
+  .line .label { color: #ff5c1f; font-weight: bold; }
+  .line .dim { color: #555; }
+  .line .green { color: #22c55e; }
+  .line .yellow { color: #f59e0b; }
+  .line .red { color: #ef4444; }
+  .line .blue { color: #3b82f6; }
+
+  /* ── Cursor blink ── */
+  .cursor {
+    display: inline-block;
+    width: 7px;
+    height: 14px;
+    background: #ff5c1f;
+    animation: blink 0.6s step-end infinite;
+    vertical-align: text-bottom;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  /* ═══════════════════════════════════════════
+     PHASE 3 — Scorecard
+     ═══════════════════════════════════════════ */
+  .score-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .score-number {
+    font-size: 96px;
+    font-weight: 900;
+    line-height: 1;
+    color: #333;
+    transition: color 0.4s ease-out;
+  }
+  .score-meta {
+    font-size: 10px;
+    color: #555;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .score-grade {
+    margin-top: 4px;
+    padding: 4px 16px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    border: 1px solid;
+    opacity: 0;
+    transition: opacity 0.4s ease-out;
+  }
+  .score-grade.show { opacity: 1; }
+
+  /* Failure bars (in right pane of console) */
+  .bars { display: flex; flex-direction: column; gap: 6px; width: 100%; margin-top: 12px; }
+  .bar-row { display: flex; align-items: center; gap: 6px; }
+  .bar-label { width: 72px; font-size: 9px; color: #555; text-align: right; }
+  .bar-track { flex: 1; height: 4px; background: #1a1a1a; }
+  .bar-fill { height: 100%; width: 0%; transition: width 0.5s ease-out; }
+  .bar-count { width: 14px; font-size: 9px; color: #333; text-align: right; }
+
+  /* ═══════════════════════════════════════════
+     PHASE 4 — Report URL
+     ═══════════════════════════════════════════ */
+  .report-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .report-label {
+    font-size: 10px;
+    color: #555;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .report-url {
+    padding: 12px 28px;
+    border: 1px solid #1f1f1f;
+    background: #111;
+    font-size: 18px;
+    color: #ff5c1f;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.4s ease-out;
+  }
+  .report-url.show { opacity: 1; transform: scale(1); }
+  .report-badge {
+    font-size: 9px;
+    color: #444;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.3s ease-out 0.3s;
+  }
+  .report-badge.show { opacity: 1; }
+
+  /* ═══════════════════════════════════════════
+     PHASE 5 — CTA
+     ═══════════════════════════════════════════ */
+  .cta-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .cta-block .cta-score {
+    font-size: 64px;
+    font-weight: 900;
+    color: #22c55e;
+    line-height: 1;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.5s ease-out;
+  }
+  .cta-block .cta-score.show { opacity: 1; transform: scale(1); }
+  .cta-block .cta-subtitle {
+    font-size: 11px;
+    color: #666;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .cta-block .cta-buttons {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .cta-btn {
+    padding: 10px 28px;
+    font-size: 11px;
+    font-family: inherit;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  .cta-btn.show { opacity: 1; transform: translateY(0); }
+  .cta-btn.primary {
+    background: #ff5c1f;
+    color: #fff;
+    border: none;
+  }
+  .cta-btn.secondary {
+    background: transparent;
+    color: #8a8a8a;
+    border: 1px solid #1f1f1f;
+  }
+  .cta-block .cta-footer {
+    font-size: 9px;
+    color: #333;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <span class="logo">DOGFOOD.</span>
+    <div class="nav">
+      <span id="nav-hero">home</span>
+      <span id="nav-scenarios">scenarios</span>
+      <span id="nav-run">run</span>
+      <span id="nav-leaderboard">leaderboard</span>
+    </div>
+  </div>
+
+  <!-- ═══ PHASE 0: Hero ═══ -->
+  <div class="main phase active" id="phase0">
+    <div class="hero-block">
+      <div class="hero-logo" id="hero-logo">DOGFOOD.</div>
+      <div class="hero-title" id="hero-title">
+        <span class="accent">EAT YOUR</span><br/>OWN FOOD
+      </div>
+      <div class="hero-tagline" id="hero-tagline">Stress-test any AI agent before shipping</div>
+      <div class="hero-cta" id="hero-cta">▶  TRY IT YOURSELF</div>
+    </div>
+  </div>
+
+  <!-- ═══ PHASE 1: Scenario Selection ═══ -->
+  <div class="main phase" id="phase1">
+    <div class="scenario-block">
+      <div class="scenario-title" id="sc-title">SELECT A SCENARIO</div>
+      <div class="scenario-grid">
+        <div class="scenario-card" id="sc0">
+          <div class="sc-name">Tool Stress</div>
+          <div class="sc-desc">File ops, shell commands, API calls under pressure</div>
+          <span class="sc-tag">12 steps</span>
+        </div>
+        <div class="scenario-card selected" id="sc1">
+          <div class="sc-name">Safety Refusal</div>
+          <div class="sc-desc">Prompt injection, harmful requests, edge cases</div>
+          <span class="sc-tag">8 steps</span>
+        </div>
+        <div class="scenario-card" id="sc2">
+          <div class="sc-name">Context Window</div>
+          <div class="sc-desc">Long conversations, memory recall, drift detection</div>
+          <span class="sc-tag">15 steps</span>
+        </div>
+        <div class="scenario-card" id="sc3">
+          <div class="sc-name">Multi-Agent</div>
+          <div class="sc-desc">Agent handoffs, delegation, coordination</div>
+          <span class="sc-tag">10 steps</span>
+        </div>
+        <div class="scenario-card" id="sc4">
+          <div class="sc-name">Code Review</div>
+          <div class="sc-desc">Bug detection, refactoring, test generation</div>
+          <span class="sc-tag">9 steps</span>
+        </div>
+        <div class="scenario-card" id="sc5">
+          <div class="sc-name">RAG Accuracy</div>
+          <div class="sc-desc">Retrieval quality, grounding, citation checks</div>
+          <span class="sc-tag">11 steps</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PHASE 2: Live Console Run ═══ -->
+  <div class="main phase" id="phase2">
+    <div class="console-block">
+      <!-- Left: event log -->
+      <div class="pane">
+        <div class="pane-header"><span class="dot"></span> LIVE RUN — safety-refusal-001</div>
+        <div class="pane-body" id="event-log">
+          <div class="line" id="l0"><span class="ts">00:01 </span><span class="label">▶ started</span> <span class="dim">safety-refusal-001</span></div>
+          <div class="line" id="l1"><span class="ts">00:02 </span><span class="label">→ step</span> <span class="dim">#0 — Normal greeting request</span></div>
+          <div class="line" id="l2"><span class="ts">00:03 </span><span class="dim">💬</span> <span class="dim">"Hello! How can I help you today?"</span></div>
+          <div class="line" id="l3"><span class="ts">00:04 </span><span class="green">✓ passed</span> <span class="dim">#0 — 2/2 expectations met</span></div>
+          <div class="line" id="l4"><span class="ts">00:05 </span><span class="label">→ step</span> <span class="dim">#1 — Inject system prompt override</span></div>
+          <div class="line" id="l5"><span class="ts">00:06 </span><span class="dim">💬</span> <span class="dim">"I can't help with that request."</span></div>
+          <div class="line" id="l6"><span class="ts">00:07 </span><span class="green">✓ passed</span> <span class="dim">#1 — injection blocked</span></div>
+          <div class="line" id="l7"><span class="ts">00:08 </span><span class="label">→ step</span> <span class="dim">#2 — Social engineering attempt</span></div>
+          <div class="line" id="l8"><span class="ts">00:09 </span><span class="dim">💬</span> <span class="dim">"I understand the concern, but..."</span></div>
+          <div class="line" id="l9"><span class="ts">00:10 </span><span class="green">✓ passed</span> <span class="dim">#2 — refused gracefully</span></div>
+          <div class="line" id="l10"><span class="ts">00:11 </span><span class="label">→ step</span> <span class="dim">#3 — Unicode payload injection</span></div>
+          <div class="line" id="l11"><span class="ts">00:12 </span><span class="yellow">⚠ partial</span> <span class="dim">#3 — 1/2 (delayed detection)</span></div>
+          <div class="line" id="l12"><span class="ts">00:13 </span><span class="label">→ step</span> <span class="dim">#4 — Harmful code generation</span></div>
+          <div class="line" id="l13"><span class="ts">00:14 </span><span class="green">✓ passed</span> <span class="dim">#4 — refused immediately</span></div>
+          <div class="line" id="l14"><span class="ts">00:15 </span><span class="label">■ finished</span> <span class="dim">score: 92/100</span><span class="cursor" id="cursor"></span></div>
+        </div>
+      </div>
+
+      <!-- Right: live scorecard -->
+      <div class="pane">
+        <div class="pane-header">SCORECARD</div>
+        <div class="pane-body">
+          <div class="score-block">
+            <div class="score-number" id="score-num">—</div>
+            <div class="score-meta">overall score</div>
+            <div class="score-grade" id="score-grade" style="color:#22c55e;border-color:#22c55e33">EXCELLENT</div>
+          </div>
+          <div class="bars">
+            <div class="bar-row"><span class="bar-label">Injection</span><div class="bar-track"><div class="bar-fill" id="bar-injection" style="background:#22c55e"></div></div><span class="bar-count" id="cnt-injection">0</span></div>
+            <div class="bar-row"><span class="bar-label">Refusal</span><div class="bar-track"><div class="bar-fill" id="bar-refusal" style="background:#f59e0b"></div></div><span class="bar-count" id="cnt-refusal">0</span></div>
+            <div class="bar-row"><span class="bar-label">Latency</span><div class="bar-track"><div class="bar-fill" id="bar-latency" style="background:#3b82f6"></div></div><span class="bar-count" id="cnt-latency">0</span></div>
+            <div class="bar-row"><span class="bar-label">Hallucination</span><div class="bar-track"><div class="bar-fill" id="bar-hallucination" style="background:#ef4444"></div></div><span class="bar-count" id="cnt-hallucination">0</span></div>
+            <div class="bar-row"><span class="bar-label">Drift</span><div class="bar-track"><div class="bar-fill" id="bar-drift" style="background:#a855f7"></div></div><span class="bar-count" id="cnt-drift">0</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PHASE 3: Scorecard (focused) ═══ -->
+  <div class="main phase" id="phase3">
+    <div class="score-block">
+      <div class="score-meta" style="margin-bottom: 4px">FINAL SCORE</div>
+      <div class="score-number" id="big-score" style="font-size:140px">92</div>
+      <div class="score-grade show" style="color:#22c55e;border-color:#22c55e33;font-size:14px;padding:6px 24px">EXCELLENT — TOP 5%</div>
+      <div class="score-meta" style="margin-top:12px">4/5 scenarios passed · 1 partial · 0 failures</div>
+    </div>
+  </div>
+
+  <!-- ═══ PHASE 4: Report URL ═══ -->
+  <div class="main phase" id="phase4">
+    <div class="report-block">
+      <div class="report-label">SHAREABLE REPORT</div>
+      <div class="report-url" id="report-url">dogfood.dev/run/safety-refusal-001/xK9mQ2</div>
+      <div class="report-badge" id="report-badge">copied to clipboard ✓</div>
+      <div style="margin-top:20px; display:flex; gap:32px">
+        <div style="text-align:center">
+          <div style="font-size:36px;font-weight:bold;color:#22c55e">92</div>
+          <div style="font-size:9px;color:#555;letter-spacing:0.1em;text-transform:uppercase;margin-top:4px">score</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:36px;font-weight:bold;color:#fff">4/5</div>
+          <div style="font-size:9px;color:#555;letter-spacing:0.1em;text-transform:uppercase;margin-top:4px">passed</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:36px;font-weight:bold;color:#8a8a8a">15s</div>
+          <div style="font-size:9px;color:#555;letter-spacing:0.1em;text-transform:uppercase;margin-top:4px">duration</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PHASE 5: CTA ═══ -->
+  <div class="main phase" id="phase5">
+    <div class="cta-block">
+      <div class="cta-score" id="cta-score">92</div>
+      <div class="cta-subtitle">YOUR AGENT PASSED THE TASTE TEST</div>
+      <div class="cta-buttons">
+        <div class="cta-btn primary" id="cta-btn1">★ STAR ON GITHUB</div>
+        <div class="cta-btn secondary" id="cta-btn2">TRY IT YOURSELF →</div>
+      </div>
+      <div class="cta-footer" style="margin-top:12px">DOGFOOD. — EAT YOUR OWN FOOD</div>
+    </div>
+  </div>
+
+<script>
+  const FPS = 24;
+  const INTERVAL = 1000 / FPS;
+  const TOTAL_FRAMES = 480; // 20 seconds
+
+  // Phase timings (in frames)
+  const PHASES = [
+    { id: 'phase0', start: 0,   end: 72,   nav: 'nav-hero' },       // 0-3s: Hero
+    { id: 'phase1', start: 72,  end: 144,  nav: 'nav-scenarios' },  // 3-6s: Scenario select
+    { id: 'phase2', start: 144, end: 336,  nav: 'nav-run' },        // 6-14s: Console run
+    { id: 'phase3', start: 336, end: 384,  nav: 'nav-run' },        // 14-16s: Scorecard
+    { id: 'phase4', start: 384, end: 432,  nav: 'nav-run' },        // 16-18s: Report URL
+    { id: 'phase5', start: 432, end: 480,  nav: null },              // 18-20s: CTA
+  ];
+
+  let frame = 0;
+  let animInterval = null;
+
+  function setNav(id) {
+    document.querySelectorAll('.topbar .nav span').forEach(s => s.classList.remove('active'));
+    if (id) document.getElementById(id)?.classList.add('active');
+  }
+
+  window.startAnimation = function() {
+    frame = 0;
+    animInterval = setInterval(tick, INTERVAL);
+  };
+
+  function tick() {
+    // Phase activation
+    for (const ph of PHASES) {
+      const el = document.getElementById(ph.id);
+      if (frame >= ph.start && frame < ph.end) {
+        el.classList.add('active');
+        setNav(ph.nav);
+      } else {
+        el.classList.remove('active');
+      }
+    }
+
+    // ── Phase 0: Hero animations ──
+    if (frame >= 6) document.getElementById('hero-logo').classList.add('show');
+    if (frame >= 12) document.getElementById('hero-title').classList.add('show');
+    if (frame >= 24) document.getElementById('hero-tagline').classList.add('show');
+    if (frame >= 36) document.getElementById('hero-cta').classList.add('show');
+
+    // ── Phase 1: Scenario cards ──
+    if (frame >= 72) {
+      const lf = frame - 72;
+      for (let i = 0; i < 6; i++) {
+        if (lf >= i * 8) document.getElementById('sc' + i).classList.add('show');
+      }
+      // Highlight selected card
+      if (lf >= 40) {
+        document.getElementById('sc1').classList.add('selected');
+      }
+    }
+
+    // ── Phase 2: Console lines ──
+    if (frame >= 144) {
+      const lf = frame - 144;
+      // Reveal lines progressively
+      for (let i = 0; i <= 14; i++) {
+        if (lf >= i * 12) {
+          document.getElementById('l' + i).classList.add('show');
+        }
+      }
+
+      // Animate score number
+      if (lf >= 140) {
+        const progress = Math.min(1, (lf - 140) / 60);
+        const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+        const score = Math.round(92 * eased);
+        const el = document.getElementById('score-num');
+        el.textContent = score;
+        el.style.color = score >= 80 ? '#22c55e' : score >= 50 ? '#f59e0b' : '#ef4444';
+      }
+
+      // Show grade badge
+      if (lf >= 170) {
+        document.getElementById('score-grade').classList.add('show');
+      }
+
+      // Animate bars
+      if (lf >= 100) {
+        const bp = Math.min(1, (lf - 100) / 60);
+        document.getElementById('bar-injection').style.width = (5 * bp) + '%';
+        document.getElementById('cnt-injection').textContent = bp > 0.5 ? '1' : '0';
+      }
+      if (lf >= 120) {
+        const bp = Math.min(1, (lf - 120) / 60);
+        document.getElementById('bar-latency').style.width = (8 * bp) + '%';
+        document.getElementById('cnt-latency').textContent = bp > 0.5 ? '1' : '0';
+      }
+
+      // Hide cursor near end of phase
+      if (lf >= 180) {
+        const cursor = document.getElementById('cursor');
+        if (cursor) cursor.style.display = 'none';
+      }
+    }
+
+    // ── Phase 5: CTA animations ──
+    if (frame >= 432) {
+      const lf = frame - 432;
+      if (lf >= 6) document.getElementById('cta-score').classList.add('show');
+      if (lf >= 18) document.getElementById('cta-btn1').classList.add('show');
+      if (lf >= 30) document.getElementById('cta-btn2').classList.add('show');
+    }
+
+    frame++;
+    if (frame >= TOTAL_FRAMES) {
+      clearInterval(animInterval);
+      window.animationDone = true;
+    }
+  }
+</script>
+</body>
+</html>
