@@ -15,11 +15,9 @@ from datetime import datetime, timezone
 from typing import Any
 
 from app.models.dogfood import (
-    FailureFinding,
     Run,
     RunEvent,
     RunRequest,
-    RunScore,
     RunStatus,
 )
 

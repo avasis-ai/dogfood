@@ -10,9 +10,7 @@ from __future__ import annotations
 import asyncio
 import json
 import os
-import sys
 from datetime import datetime, timezone
-from typing import Any
 
 from app.models.dogfood import FailureFinding, RunEvent, RunScore, RunStatus
 from app.seeds.scenarios import SEED_SCENARIOS
