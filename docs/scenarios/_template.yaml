@@ -1,0 +1,66 @@
+# Copy this file to `docs/scenarios/<your-slug>.yaml` and fill it in.
+# See CONTRIBUTING-A-SCENARIO.md for the full walkthrough.
+
+# A globally unique, kebab-case slug. Becomes the URL.
+slug: my-scenario-name-001
+
+# Human-readable title (shown on cards)
+title: Short, sharp description of what you're testing
+
+# One-sentence elevator pitch
+summary: >-
+  A one-line explanation of why this scenario exists and what failure mode
+  it's hunting.
+
+# Curated categories. Use existing ones where possible:
+# tool-calling · memory · adversarial · context-loss · tone · math · coding · multi-turn
+tags:
+  - memory
+  - adversarial
+
+# Optional system prompt injected before step 0.
+# Leave empty if you want the agent's default system prompt.
+system: |
+  You are a helpful assistant. Be concise.
+
+# Per-step latency budget fallback (ms). Individual steps can override.
+latencyBudgetMs: 10000
+
+# 2-5 steps is the sweet spot. Each step has:
+#   - role:    "user" | "system" | "tool"
+#   - content: the literal message the agent sees
+#   - expect:  a list of expectations evaluated AFTER the agent replies
+#
+# Expectation kinds:
+#   - contains     : {value, mode?}       — response must contain a substring
+#   - not_contains : {value, mode?}       — response must NOT contain a substring
+#   - regex        : {pattern, mode?}     — response must match this pattern
+#   - tool_called  : {name, mode?}        — agent must call this tool
+#   - tool_not_called : {name, mode?}     — agent must NOT call this tool
+#   - max_latency_ms : {value, mode?}     — response under this many ms
+#   - judge        : {rubric, mode?}      — LLM-as-judge nuanced check
+#
+# mode is one of:
+#   hallucination · refusal · latency · tool_misuse · context_loss · tone_drift
+# (mode determines which failure-mode bar fills up in the report)
+steps:
+  - role: user
+    content: "My name is Alice and I live in Mumbai."
+    expect: []
+
+  - role: user
+    content: "What's my name?"
+    expect:
+      - kind: contains
+        value: Alice
+        mode: context_loss
+
+  - role: user
+    content: "What's my city?"
+    expect:
+      - kind: contains
+        value: Mumbai
+        mode: context_loss
+      - kind: max_latency_ms
+        value: 5000
+        mode: latency

@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "allowJs": false,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "paths": {
+      "@dogfood/shared": ["./packages/shared/src/index.ts"],
+      "@dogfood/shared/*": ["./packages/shared/src/*"],
+      "@dogfood/connectors": ["./packages/connectors/src/index.ts"],
+      "@dogfood/connectors/*": ["./packages/connectors/src/*"],
+      "@dogfood/runner": ["./packages/runner/src/index.ts"],
+      "@dogfood/runner/*": ["./packages/runner/src/*"],
+      "@dogfood/ui": ["./packages/ui/src/index.ts"],
+      "@dogfood/ui/*": ["./packages/ui/src/*"]
+    }
+  }
+}

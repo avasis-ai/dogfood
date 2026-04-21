@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url("https://fonts.gstatic.com/s/jetbrainsmono/v20/tDbY2o-flEEny0FPP0Im-vc0M-F0yRF8.woff2")
+    format("woff2");
+}
+
+:root {
+  /* Base palette — monochrome dark */
+  --background: #0a0a0a;
+  --surface: #111111;
+  --border: #1f1f1f;
+  --foreground: #ffffff;
+  --muted: #8a8a8a;
+  --dim: #5a5a5a;
+  --accent: #ff5c1f;
+  --accent-dim: rgba(255, 92, 31, 0.15);
+  --radius: 2px;
+
+  /* Shadcn CSS variable compatibility */
+  --card: var(--surface);
+  --card-foreground: var(--foreground);
+  --popover: var(--surface);
+  --popover-foreground: var(--foreground);
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --secondary: var(--surface);
+  --secondary-foreground: var(--foreground);
+  --destructive: #ef4444;
+  --destructive-foreground: var(--foreground);
+  --ring: var(--accent);
+  --input: var(--border);
+}
+
+/* Force dark mode only — Dogfood is a dev tool */
+* {
+  border-color: var(--border);
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: "JetBrains Mono", ui-monospace, "Cascadia Code", "Fira Code",
+    monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Type scale: 12 / 14 / 16 / 20 / 28 / 40 */
+.text-xs {
+  font-size: 12px;
+}
+.text-sm {
+  font-size: 14px;
+}
+.text-base {
+  font-size: 16px;
+}
+.text-lg {
+  font-size: 20px;
+}
+.text-xl {
+  font-size: 28px;
+}
+.text-2xl {
+  font-size: 40px;
+}
+
+/* Utility: accent highlight */
+.text-accent {
+  color: var(--accent);
+}
+
+.bg-accent {
+  background-color: var(--accent);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
