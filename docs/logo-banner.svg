@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 120" width="480" height="120">
+  <rect width="480" height="120" fill="#0a0a0a"/>
+  <text x="50%" y="52%" text-anchor="middle" dominant-baseline="middle"
+        font-family="'JetBrains Mono', 'Menlo', ui-monospace, monospace"
+        font-size="54" font-weight="700" fill="#ffffff" letter-spacing="-1">
+    = dogfood
+  </text>
+  <text x="50%" y="80%" text-anchor="middle" dominant-baseline="middle"
+        font-family="'JetBrains Mono', 'Menlo', ui-monospace, monospace"
+        font-size="13" font-weight="500" fill="#ff5c1f" letter-spacing="2">
+    STRESS · TEST · AI · AGENTS
+  </text>
+</svg>
