@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 180" width="512" height="180" role="img" aria-label="DOGFOOD.">
+  <title>DOGFOOD.</title>
+
+  <!-- Canvas -->
+  <rect width="512" height="180" fill="#0a0a0a"/>
+
+  <!--
+    ICON (left block, 180x180 square region)
+    Simplified from the standalone icon: drop the window chrome / grid,
+    keep the bowl + bite + kibble. Lets the wordmark breathe.
+  -->
+  <g transform="translate(20 20)">
+    <!-- Bowl outline -->
+    <path
+      d="M 40 64 L 136 64 L 124 126 L 52 126 Z"
+      fill="none"
+      stroke="#ffffff"
+      stroke-width="6"
+      stroke-linejoin="miter"
+      stroke-miterlimit="2"/>
+
+    <!-- Top rim -->
+    <rect x="37" y="61" width="102" height="6" fill="#ffffff"/>
+
+    <!-- Bite notch -->
+    <rect x="79" y="55" width="18" height="18" fill="#0a0a0a"/>
+    <rect x="82" y="58" width="12" height="12" fill="none" stroke="#ffffff" stroke-width="1"/>
+
+    <!-- Kibble (accent) -->
+    <rect x="82" y="86" width="12" height="12" fill="#ff5c1f"/>
+
+    <!-- Small kibble pieces -->
+    <rect x="64" y="98" width="6" height="6" fill="#ffffff"/>
+    <rect x="106" y="98" width="6" height="6" fill="#ffffff"/>
+
+    <!-- Base line -->
+    <rect x="46" y="132" width="84" height="2" fill="#1f1f1f"/>
+  </g>
+
+  <!-- Vertical divider between icon and wordmark -->
+  <rect x="188" y="52" width="1" height="76" fill="#1f1f1f"/>
+
+  <!--
+    WORDMARK: "DOGFOOD."
+    Monospace, heavy, tight letter-spacing. The period is in accent orange.
+  -->
+  <text
+    x="212"
+    y="108"
+    font-family="'JetBrains Mono', 'IBM Plex Mono', 'Menlo', ui-monospace, monospace"
+    font-size="52"
+    font-weight="800"
+    fill="#ffffff"
+    letter-spacing="-1.5">DOGFOOD<tspan fill="#ff5c1f">.</tspan></text>
+
+  <!-- Tiny meta label above wordmark -->
+  <text
+    x="212"
+    y="66"
+    font-family="'JetBrains Mono', 'Menlo', ui-monospace, monospace"
+    font-size="9"
+    font-weight="500"
+    fill="#8a8a8a"
+    letter-spacing="3">v1 / OPEN SOURCE</text>
+
+  <!-- Tiny meta label below wordmark -->
+  <text
+    x="212"
+    y="128"
+    font-family="'JetBrains Mono', 'Menlo', ui-monospace, monospace"
+    font-size="9"
+    font-weight="500"
+    fill="#8a8a8a"
+    letter-spacing="3">AI · AGENT · STRESS · TEST</text>
+
+  <!-- Corner ticks (brutalist frame) -->
+  <g fill="#ff5c1f">
+    <rect x="8" y="8" width="10" height="1"/>
+    <rect x="8" y="8" width="1" height="10"/>
+    <rect x="494" y="8" width="10" height="1"/>
+    <rect x="503" y="8" width="1" height="10"/>
+    <rect x="8" y="171" width="10" height="1"/>
+    <rect x="8" y="162" width="1" height="10"/>
+    <rect x="494" y="171" width="10" height="1"/>
+    <rect x="503" y="162" width="1" height="10"/>
+  </g>
+</svg>

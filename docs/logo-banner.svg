@@ -1,13 +1,130 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 120" width="480" height="120">
-  <rect width="480" height="120" fill="#0a0a0a"/>
-  <text x="50%" y="52%" text-anchor="middle" dominant-baseline="middle"
-        font-family="'JetBrains Mono', 'Menlo', ui-monospace, monospace"
-        font-size="54" font-weight="700" fill="#ffffff" letter-spacing="-1">
-    = dogfood
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300" role="img" aria-label="DOGFOOD. Eat your own food.">
+  <title>DOGFOOD. — Eat your own food.</title>
+
+  <!-- Canvas -->
+  <rect width="1200" height="300" fill="#0a0a0a"/>
+
+  <!--
+    Full-bleed grid of faint dots — terminal/brutalist texture.
+    32px spacing, dots only 1x1 so it reads as atmosphere, not pattern.
+  -->
+  <g fill="#1f1f1f">
+    <!-- Row 1 -->
+    <rect x="32" y="32" width="1" height="1"/><rect x="96" y="32" width="1" height="1"/><rect x="160" y="32" width="1" height="1"/><rect x="224" y="32" width="1" height="1"/><rect x="288" y="32" width="1" height="1"/><rect x="352" y="32" width="1" height="1"/><rect x="416" y="32" width="1" height="1"/><rect x="480" y="32" width="1" height="1"/><rect x="544" y="32" width="1" height="1"/><rect x="608" y="32" width="1" height="1"/><rect x="672" y="32" width="1" height="1"/><rect x="736" y="32" width="1" height="1"/><rect x="800" y="32" width="1" height="1"/><rect x="864" y="32" width="1" height="1"/><rect x="928" y="32" width="1" height="1"/><rect x="992" y="32" width="1" height="1"/><rect x="1056" y="32" width="1" height="1"/><rect x="1120" y="32" width="1" height="1"/>
+    <!-- Row 2 -->
+    <rect x="32" y="268" width="1" height="1"/><rect x="96" y="268" width="1" height="1"/><rect x="160" y="268" width="1" height="1"/><rect x="224" y="268" width="1" height="1"/><rect x="288" y="268" width="1" height="1"/><rect x="352" y="268" width="1" height="1"/><rect x="416" y="268" width="1" height="1"/><rect x="480" y="268" width="1" height="1"/><rect x="544" y="268" width="1" height="1"/><rect x="608" y="268" width="1" height="1"/><rect x="672" y="268" width="1" height="1"/><rect x="736" y="268" width="1" height="1"/><rect x="800" y="268" width="1" height="1"/><rect x="864" y="268" width="1" height="1"/><rect x="928" y="268" width="1" height="1"/><rect x="992" y="268" width="1" height="1"/><rect x="1056" y="268" width="1" height="1"/><rect x="1120" y="268" width="1" height="1"/>
+  </g>
+
+  <!-- Top status bar (terminal window chrome) -->
+  <rect x="24" y="24" width="1152" height="18" fill="#111111" stroke="#1f1f1f" stroke-width="1"/>
+  <!-- Traffic light squares (flat, brutalist — no circles) -->
+  <rect x="32" y="30" width="6" height="6" fill="#1f1f1f"/>
+  <rect x="42" y="30" width="6" height="6" fill="#1f1f1f"/>
+  <rect x="52" y="30" width="6" height="6" fill="#ff5c1f"/>
+  <!-- Path in title bar -->
+  <text x="600" y="37" text-anchor="middle"
+    font-family="'JetBrains Mono', 'Menlo', ui-monospace, monospace"
+    font-size="9" font-weight="500" fill="#8a8a8a" letter-spacing="1">~ / dogfood — stress-test ai agents</text>
+
+  <!-- Bottom status bar -->
+  <rect x="24" y="258" width="1152" height="18" fill="#111111" stroke="#1f1f1f" stroke-width="1"/>
+  <text x="34" y="271"
+    font-family="'JetBrains Mono', 'Menlo', ui-monospace, monospace"
+    font-size="9" font-weight="500" fill="#8a8a8a" letter-spacing="1">READY</text>
+  <rect x="78" y="264" width="6" height="6" fill="#ff5c1f"/>
+  <text x="1166" y="271" text-anchor="end"
+    font-family="'JetBrains Mono', 'Menlo', ui-monospace, monospace"
+    font-size="9" font-weight="500" fill="#8a8a8a" letter-spacing="1">MIT · github.com/dogfood</text>
+
+  <!--
+    ICON — positioned left, scaled up for banner presence.
+    Occupies roughly the left 280px column.
+  -->
+  <g transform="translate(80 90)">
+    <!-- Bowl outline -->
+    <path
+      d="M 30 56 L 150 56 L 135 132 L 45 132 Z"
+      fill="none"
+      stroke="#ffffff"
+      stroke-width="7"
+      stroke-linejoin="miter"
+      stroke-miterlimit="2"/>
+
+    <!-- Top rim (heavy) -->
+    <rect x="26" y="52" width="128" height="7" fill="#ffffff"/>
+
+    <!-- Bite notch -->
+    <rect x="78" y="44" width="24" height="24" fill="#0a0a0a"/>
+    <rect x="82" y="48" width="16" height="16" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+
+    <!-- Main kibble (accent) -->
+    <rect x="82" y="82" width="16" height="16" fill="#ff5c1f"/>
+
+    <!-- Small kibble pieces -->
+    <rect x="58" y="98" width="8" height="8" fill="#ffffff"/>
+    <rect x="114" y="98" width="8" height="8" fill="#ffffff"/>
+
+    <!-- Base shadow -->
+    <rect x="38" y="140" width="104" height="3" fill="#1f1f1f"/>
+  </g>
+
+  <!-- Vertical divider -->
+  <rect x="300" y="90" width="1" height="120" fill="#1f1f1f"/>
+
+  <!--
+    WORDMARK
+  -->
+  <!-- Small meta label -->
+  <text x="340" y="120"
+    font-family="'JetBrains Mono', 'Menlo', ui-monospace, monospace"
+    font-size="11" font-weight="500" fill="#ff5c1f" letter-spacing="4">// PLAYGROUND_v1</text>
+
+  <!-- Main wordmark -->
+  <text x="340" y="188"
+    font-family="'JetBrains Mono', 'IBM Plex Mono', 'Menlo', ui-monospace, monospace"
+    font-size="72" font-weight="800" fill="#ffffff" letter-spacing="-2">DOGFOOD<tspan fill="#ff5c1f">.</tspan></text>
+
+  <!-- Tagline with terminal prompt -->
+  <text x="340" y="220"
+    font-family="'JetBrains Mono', 'Menlo', ui-monospace, monospace"
+    font-size="15" font-weight="500" fill="#8a8a8a" letter-spacing="1">
+    <tspan fill="#ff5c1f">$</tspan> eat your own food.
   </text>
-  <text x="50%" y="80%" text-anchor="middle" dominant-baseline="middle"
-        font-family="'JetBrains Mono', 'Menlo', ui-monospace, monospace"
-        font-size="13" font-weight="500" fill="#ff5c1f" letter-spacing="2">
-    STRESS · TEST · AI · AGENTS
-  </text>
+
+  <!--
+    Right-side "stats" block — adds density, reads as a dashboard.
+  -->
+  <g font-family="'JetBrains Mono', 'Menlo', ui-monospace, monospace" font-size="10" letter-spacing="1.5">
+    <!-- Column 1 -->
+    <text x="900" y="110" fill="#8a8a8a">SCENARIOS</text>
+    <text x="900" y="130" fill="#ffffff" font-size="22" font-weight="700" letter-spacing="-0.5">147</text>
+    <rect x="900" y="140" width="80" height="2" fill="#1f1f1f"/>
+    <rect x="900" y="140" width="56" height="2" fill="#ff5c1f"/>
+
+    <!-- Column 2 -->
+    <text x="1020" y="110" fill="#8a8a8a">AGENTS</text>
+    <text x="1020" y="130" fill="#ffffff" font-size="22" font-weight="700" letter-spacing="-0.5">12</text>
+    <rect x="1020" y="140" width="80" height="2" fill="#1f1f1f"/>
+    <rect x="1020" y="140" width="34" height="2" fill="#ff5c1f"/>
+
+    <!-- Status row -->
+    <text x="900" y="180" fill="#8a8a8a">STATUS</text>
+    <rect x="900" y="188" width="6" height="6" fill="#ff5c1f"/>
+    <text x="914" y="194" fill="#ffffff" font-weight="700">STRESS_TESTING</text>
+
+    <text x="900" y="218" fill="#8a8a8a">UPTIME</text>
+    <text x="900" y="234" fill="#ffffff" font-weight="700">99.94%</text>
+  </g>
+
+  <!-- Corner ticks -->
+  <g fill="#ff5c1f">
+    <rect x="12" y="12" width="12" height="1"/>
+    <rect x="12" y="12" width="1" height="12"/>
+    <rect x="1176" y="12" width="12" height="1"/>
+    <rect x="1187" y="12" width="1" height="12"/>
+    <rect x="12" y="287" width="12" height="1"/>
+    <rect x="12" y="276" width="1" height="12"/>
+    <rect x="1176" y="287" width="12" height="1"/>
+    <rect x="1187" y="276" width="1" height="12"/>
+  </g>
 </svg>

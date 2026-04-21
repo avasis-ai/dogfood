@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/thumb.gif" alt="Dogfood in action" width="720" />
+  <img src="docs/demo.gif" alt="Dogfood in action" width="720" />
 </p>
 
 <p align="center">
