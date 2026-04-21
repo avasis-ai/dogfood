@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/logo-banner.svg" alt="Dogfood" width="480" />
+  <img src="docs/logo-banner.png" alt="Dogfood" width="480" />
 </p>
 
 <p align="center">
@@ -159,7 +159,7 @@ agents. A link back is appreciated.
 [Turborepo](https://turbo.build/repo) · [Next.js](https://nextjs.org) · [FastAPI](https://fastapi.tiangolo.com) · [shadcn/ui](https://ui.shadcn.com) · [Tailwind](https://tailwindcss.com) · [uv](https://github.com/astral-sh/uv)
 
 <p align="center">
-  <a href="https://avasis.ai"><img src="docs/logo.svg" alt="Avasis" width="32" /></a>
+  <a href="https://avasis.ai"><img src="docs/logo.png" alt="Avasis" width="32" /></a>
 </p>
 
 <p align="center">
