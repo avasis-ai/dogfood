@@ -1,0 +1,19 @@
+# CODEOWNERS — who to tag on PRs
+
+# Everything defaults to the core team
+*                                   @avasis-ai
+
+# Connectors — must be reviewed by someone who can speak for the
+# provider's API shape and auth model
+/packages/connectors/               @avasis-ai
+
+# Failure-mode taxonomy changes affect everything downstream —
+# treat as blocking review
+/packages/shared/src/failure-modes.ts    @avasis-ai
+/packages/shared/src/types.ts            @avasis-ai
+
+# Scenario seed file — public leaderboard depends on it
+/apps/api/app/seeds/                @avasis-ai
+
+# Scenarios contributed as YAML — low-review-bar by design
+/docs/scenarios/                    @avasis-ai
